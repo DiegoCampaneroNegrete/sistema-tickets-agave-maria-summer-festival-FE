@@ -10,5 +10,7 @@ export const LABELS = {
   totalSales: 'Ventas totales',
   orders: 'Órdenes',
   products: 'Productos vendidos',
-  remove: 'Eliminar'
+  remove: 'Eliminar',
+  mergeLabel: 'Merge de ventas',
+  merge: 'merge'
 }

@@ -12,15 +12,12 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
 
   return (
     <>
-      {/* Botón hamburger */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="md:hidden px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700"
       >
         ☰
       </button>
-
-      {/* Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-30"
@@ -35,15 +32,12 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
         }`}
       >
         <div className="p-4 space-y-4">
-          {/* Cerrar sidebar */}
           <button
             onClick={() => setIsOpen(false)}
             className="w-full text-right text-2xl"
           >
             ✕
           </button>
-
-          {/* Botones de navegación */}
           <button
             onClick={() => {
               window.location.href = '/pos'
@@ -64,7 +58,15 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
             {LABELS.dashboard}
           </button>
 
-          {/* Botón tema oscuro */}
+          <button
+            onClick={() => {
+              window.location.href = '/merge'
+              setIsOpen(false)
+            }}
+            className="w-full px-4 py-3 rounded-lg bg-purple-500 text-white font-semibold hover:bg-purple-600"
+          >
+            {LABELS.mergeLabel}
+          </button>
           <button
             onClick={() => {
               onToggleDark()
