@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { LABELS } from '@/utils/constants'
 import Sidebar from './Sidebar'
+import Link from 'next/link'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [dark, setDark] = useState(false)
@@ -13,7 +14,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-4">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">{LABELS.appName}</h1>
+         <Link href="/">
+           <h1 className="text-xl font-bold">{LABELS.appName}</h1>
+         </Link>
 
         <Sidebar dark={dark} onToggleDark={() => setDark(!dark)} />
       </div>

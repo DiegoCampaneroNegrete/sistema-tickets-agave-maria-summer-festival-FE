@@ -1,17 +1,5 @@
 'use client'
-// -------------------- TYPES --------------------
-type OrderItem = {
-  name: string
-  quantity: number
-  price: number
-}
-
-type Order = {
-  id: string
-  items: OrderItem[]
-  total: number
-  createdAt: string
-}
+import { Order } from '@/lib/types'
 
 // -------------------- CONFIG --------------------
 type PrinterConfig = {

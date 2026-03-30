@@ -4,31 +4,34 @@ import { LABELS } from "@/utils/constants";
 
 import { useCart } from "@/hooks/useCart";
 import { useOrders } from "@/hooks/useOrders";
+import { useDeviceId } from "@/hooks/useDeviceId";
 import { Order } from "@/lib/types";
 import { usePrinter } from '@/hooks/usePrinter'
+import { generateId } from "@/utils/utils";
 
 const PRODUCTS = [
-  { id: "1", name: "Pulque Piña", price: 50 },
-  { id: "2", name: "Pulque Fresa", price: 50 },
-  { id: "3", name: "Pócima", price: 70 },
-  { id: "4", name: "Tejuichela", price: 80 },
+  { id: "1", name: "Pulque Natural", price: 100 },
+  { id: "2", name: "Pulque Curado", price: 120 },
+  { id: "3", name: "Pócima", price: 150 },
+  { id: "4", name: "Tejuichela", price: 100 },
 ];
 
 export default function POSPage() {
-    const { print } = usePrinter({
-  width: '58mm',
-  copies: 2,
-  businessName: 'Agave Maria 🍹'
-})
+  const deviceId = useDeviceId()
+  const { print } = usePrinter({
+    width: '58mm',
+    copies: 2,
+    businessName: 'Agave Maria 🍹'
+  })
   const { cart, addToCart, removeFromCart, total, clearCart } = useCart();
-  console.log('Cart:', cart);
   const { createOrder } = useOrders();
 
   const handleCheckout = async () => {
-    if (!cart.length) return;
+    if (!cart.length || !deviceId) return;
 
-    const order = {
-      id: Math.random().toString(36).substring(2, 8),
+    const order: Order = {
+      id: generateId(),
+      deviceId,
       items: cart,
       total,
       createdAt: new Date().toISOString(),

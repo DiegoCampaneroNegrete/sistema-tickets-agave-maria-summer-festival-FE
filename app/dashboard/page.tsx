@@ -3,7 +3,14 @@ import { LABELS } from '@/utils/constants'
 import { useOrders } from '@/hooks/useOrders'
 
 export default function DashboardPage() {
-  const { totalSales, totalOrders, productCount } = useOrders()
+  const { totalSales, totalOrders, productCount, orders } = useOrders()
+    const salesByDevice = {}
+
+    // orders.forEach(order => {
+    // salesByDevice[order.deviceId] =
+    //     (salesByDevice[order.deviceId] || 0) + order.total
+    // })
+
 
   return (
     <div className="space-y-6">
