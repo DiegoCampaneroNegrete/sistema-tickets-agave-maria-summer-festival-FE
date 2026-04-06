@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-4">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center my-4">
         <Link href="/">
           <button className="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">
             <h1 className="text-xl font-bold">{LABELS.appName}</h1>
