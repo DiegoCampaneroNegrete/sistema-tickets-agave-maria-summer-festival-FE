@@ -1,6 +1,6 @@
 'use client'
 import { useOrders } from '@/hooks/useOrders'
-
+export const dynamic = 'force-static';
 export default function HomePage() {
   const { totalSales, totalOrders } = useOrders()
 

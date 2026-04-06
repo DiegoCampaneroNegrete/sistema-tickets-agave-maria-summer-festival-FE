@@ -1,7 +1,15 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  output: 'export',
+  // IMPORTANTE para Capacitor
+  images: {
+    unoptimized: true,
+  },
+
+  // Opcional pero recomendado
+  trailingSlash: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production'
   },
@@ -36,4 +44,4 @@ const nextConfig = {
   }
 };
 
-module.exports = nextConfig;
+export default nextConfig;

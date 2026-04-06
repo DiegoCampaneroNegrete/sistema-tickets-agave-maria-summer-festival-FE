@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { LABELS } from '@/utils/constants'
 
 interface SidebarProps {
@@ -9,6 +10,7 @@ interface SidebarProps {
 
 export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
 
   return (
     <>
@@ -40,7 +42,7 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
           </button>
           <button
             onClick={() => {
-              window.location.href = '/pos'
+              router.push('/pos')
               setIsOpen(false)
             }}
             className="w-full px-4 py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600"
@@ -50,7 +52,7 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
 
           <button
             onClick={() => {
-              window.location.href = '/dashboard'
+              router.push('/dashboard')
               setIsOpen(false)
             }}
             className="w-full px-4 py-3 rounded-lg bg-purple-500 text-white font-semibold hover:bg-purple-600"
@@ -60,7 +62,7 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
 
           <button
             onClick={() => {
-              window.location.href = '/merge'
+              router.push('/merge')
               setIsOpen(false)
             }}
             className="w-full px-4 py-3 rounded-lg bg-purple-500 text-white font-semibold hover:bg-purple-600"
@@ -82,14 +84,14 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
       {/* Menú desktop */}
       <div className="hidden md:flex gap-2">
         <button
-          onClick={() => (window.location.href = '/pos')}
+          onClick={() => router.push('/pos')}
           className="px-3 py-2 rounded-lg bg-blue-500 text-white"
         >
           {LABELS.pos}
         </button>
 
         <button
-          onClick={() => (window.location.href = '/dashboard')}
+          onClick={() => router.push('/dashboard')}
           className="px-3 py-2 rounded-lg bg-purple-500 text-white"
         >
           {LABELS.dashboard}
