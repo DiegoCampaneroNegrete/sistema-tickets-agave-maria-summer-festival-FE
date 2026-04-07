@@ -4,10 +4,12 @@ import { LABELS } from "@/utils/constants";
 
 import { useCart } from "@/hooks/useCart";
 import { useOrders } from "@/hooks/useOrders";
-import { useDeviceId } from "@/hooks/useDeviceId";
+import { useBluetooth } from "@/hooks/useBluetooth";
+import { useToast } from "@/hooks/useToast";
 import { Order } from "@/lib/types";
 import { usePrinter } from '@/hooks/usePrinter'
 import { generateId } from "@/utils/utils";
+import BluetoothStatus from "@/components/BluetoothStatus";
 
 const PRODUCTS = [
   { id: "1", name: "Pulque Natural", price: 100 },
@@ -17,7 +19,8 @@ const PRODUCTS = [
 ];
 
 export default function POSPage() {
-  const deviceId = useDeviceId()
+  const { deviceId, isConnected } = useBluetooth()
+  const { addToast } = useToast()
   const { print } = usePrinter({
     width: '58mm',
     copies: 2,
@@ -27,23 +30,33 @@ export default function POSPage() {
   const { createOrder } = useOrders();
 
   const handleCheckout = async () => {
-    if (!cart.length || !deviceId) return;
+    if (!cart.length) return;
 
     const order: Order = {
       id: generateId(),
-      deviceId,
+      deviceId: deviceId || generateId(), // Usar ID generado si no hay dispositivo
       items: cart,
       total,
       createdAt: new Date().toISOString(),
     };
 
     await createOrder(order);
-    print(order);
+    
+    // Solo imprimir si está conectado
+    if (isConnected) {
+      print(order);
+    }
+    
     clearCart();
+    addToast(`✅ Venta registrada - Total: $${total.toFixed(2)}`, 'success', 3000);
   };
 
   return (
     <>
+      <div className="mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <BluetoothStatus />
+      </div>
+
       <div className="grid grid-cols-2 gap-3">
         {PRODUCTS.map((p) => (
           <button
@@ -72,7 +85,8 @@ export default function POSPage() {
 
       <button
         onClick={handleCheckout}
-        className="w-full h-20 bg-green-600 text-white mt-4"
+        disabled={!cart.length}
+        className="w-full h-20 bg-green-600 text-white mt-4 disabled:bg-gray-400 disabled:cursor-not-allowed"
       >
         {LABELS.checkout}
       </button>

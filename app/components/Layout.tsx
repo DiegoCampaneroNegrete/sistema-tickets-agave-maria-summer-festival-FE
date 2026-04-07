@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { LABELS } from "@/utils/constants";
 import Sidebar from "./Sidebar";
+import ToastContainer from "./ToastContainer";
 import Link from "next/link";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -23,6 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Sidebar dark={dark} onToggleDark={() => setDark(!dark)} />
       </div>
 
+      <ToastContainer />
       {children}
     </div>
   );
