@@ -1,60 +1,74 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { LABELS } from "@/utils/constants";
+import { LABELS, PRODUCTS } from "@/utils/constants";
 
 import { useCart } from "@/hooks/useCart";
 import { useOrders } from "@/hooks/useOrders";
 import { useBluetooth } from "@/hooks/useBluetooth";
 import { useToast } from "@/hooks/useToast";
-import { Order } from "@/lib/types";
-import { usePrinter } from '@/hooks/usePrinter'
 import { generateId } from "@/utils/utils";
 import BluetoothStatus from "@/components/BluetoothStatus";
-
-const PRODUCTS = [
-  { id: "1", name: "Pulque Natural", price: 100 },
-  { id: "2", name: "Pulque Curado", price: 120 },
-  { id: "3", name: "Pócima", price: 150 },
-  { id: "4", name: "Tejuichela", price: 100 },
-];
+import { useEffect } from "react";
+import { buildTicket } from "@/utils/ticketBuilder";
 
 export default function POSPage() {
-  const { deviceId, isConnected } = useBluetooth()
-  const { addToast } = useToast()
-  const { print } = usePrinter({
-    width: '58mm',
-    copies: 2,
-    businessName: 'Agave Maria 🍹'
-  })
+  const { addToast } = useToast();
+
+  useEffect(() => {}, []);
   const { cart, addToCart, removeFromCart, total, clearCart } = useCart();
   const { createOrder } = useOrders();
 
+  const {
+    deviceId,
+    isConnected,
+    connect,
+    autoDetectPrinter,
+    print,
+    printMessage,
+  } = useBluetooth();
+
   const handleCheckout = async () => {
+    printMessage();
     if (!cart.length) return;
 
-    const order: Order = {
+    const order = {
       id: generateId(),
-      deviceId: deviceId || generateId(), // Usar ID generado si no hay dispositivo
       items: cart,
+      deviceId: deviceId || generateId(), // Usar ID generado si no hay dispositivo
       total,
       createdAt: new Date().toISOString(),
     };
 
     await createOrder(order);
-    
-    // Solo imprimir si está conectado
-    if (isConnected) {
-      print(order);
+
+    const ticket = buildTicket(order);
+
+    try {
+      await print(ticket);
+      // addToast({ id: generateId(), message: '¡Venta realizada e impresa con éxito!', type: 'success' })
+      addToast("¡Venta realizada con éxito! Imprimiendo...", "success");
+    } catch (err) {
+      console.error("Error al imprimir",err);
+      addToast("Error al imprimir", "error");
+      // alert("Error al imprimir");
+      // alert()
     }
-    
+
     clearCart();
-    addToast(`✅ Venta registrada - Total: $${total.toFixed(2)}`, 'success', 3000);
   };
 
   return (
     <>
       <div className="mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
         <BluetoothStatus />
+        <button
+          onClick={async () => {
+            await autoDetectPrinter();
+          }}
+          className="w-full h-16 bg-blue-600 text-white rounded-2xl"
+        >
+          Buscar impresora
+        </button>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
