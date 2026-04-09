@@ -1,53 +1,49 @@
-# 📚 Documentación - Sistema de Tickets Agave María
+# 🍹 Agave Maria POS - Festival System
 
-Bienvenido a la documentación del **Sistema de Tickets y POS para Agave María Summer Festival**.
+Sistema de punto de venta (POS) offline para festivales, optimizado para velocidad, estabilidad y operación en campo.
 
-Esta documentación está diseñada para ayudarte a entender, desarrollar y mantener la aplicación.
+## 🚀 Features
 
-## 📖 Índice
-
-### Usuarios Nuevos
-- **[🚀 Inicio Rápido](SETUP.md)** - Cómo instalar y ejecutar la aplicación
-- **[✨ Características](FEATURES.md)** - ¿Qué puede hacer esta aplicación?
-
-### Desarrolladores
-- **[🏗️ Arquitectura](ARCHITECTURE.md)** - Estructura del proyecto y decisiones de diseño
-- **[💻 Desarrollo](DEVELOPMENT.md)** - Guía para desarrollo local
-- **[📚 API y Hooks](API.md)** - Referencia de componentes y hooks personalizados
-- **[📱 PWA](PWA.md)** - Configuración y características de la Progressive Web App
-
-### Despliegue
-- **[🌐 Build y Deploy](../BUILD_AND_DEPLOY.md)** - Cómo compilar y desplegar a producción
+- 🧾 Generación de tickets térmicos (ESC/POS)
+- 📱 Compatible con Android (APK vía Capacitor)
+- 🔵 Conexión Bluetooth (BLE)
+- 💾 Persistencia local (offline-first)
+- ⚡ Flujo ultra rápido para eventos
+- 🧠 Auto reconexión de impresora
 
 ---
 
-## 🎯 Sobre el Proyecto
+## 📦 Stack
 
-**Sistema de Tickets - Agave María Summer Festival** es una aplicación web moderna diseñada para:
-
-- 🎫 Vender tickets para el festival
-- 💳 Gestionar un punto de venta (POS)
-- 📊 Ver estadísticas y reportes
-- 📱 Funcionar como PWA (instalable en dispositivos)
-- 🌙 Soportar tema oscuro
-
-## 🛠️ Tech Stack
-
-- **Frontend**: Next.js 16 con React 19
-- **Styling**: Tailwind CSS
-- **Base de Datos**: Dexie.js (IndexedDB)
-- **State Management**: Jotai
-- **PWA**: Service Worker manual
-
-## 🚀 Quick Links
-
-| Acción | Comando |
-|--------|---------|
-| Desarrollo | `npm run dev` |
-| Compilar | `npm run build` |
-| Producción | `npm start` |
-| Linting | `npm run lint` |
+- React + Next.js (exportado a SPA)
+- Capacitor (Android)
+- TailwindCSS
+- Jotai (state management)
+- Bluetooth LE (impresión)
 
 ---
 
-**¿Necesitas ayuda?** Revisa la documentación específica o consulta con el equipo de desarrollo.
+## 🧾 Flujo básico
+
+1. Agregar productos al carrito
+2. Generar orden
+3. Imprimir ticket (cliente + caja)
+4. Guardar en base local
+
+---
+
+## ⚠️ Importante
+
+- No depende de internet
+- No usa backend
+- Diseñado para alta demanda (festivales)
+
+---
+
+## 🛠️ Comandos
+
+```bash
+npm install
+npm run build
+npx cap sync android
+npx cap open android
