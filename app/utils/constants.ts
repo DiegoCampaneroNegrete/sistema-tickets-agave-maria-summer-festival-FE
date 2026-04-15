@@ -18,7 +18,7 @@ export const LABELS = {
 export const PRODUCTS = [
   { id: "1", name: "Pulque Natural", price: 100 },
   { id: "2", name: "Pulque Curado", price: 120 },
-  { id: "3", name: "Pócima", price: 150 },
+  { id: "3", name: "Pocima", price: 150 },
   { id: "4", name: "Tejuichela", price: 100 },
   { id: "5", name: "Pulque Natural Descuento", price: 90 },
   { id: "6", name: "Pulque Curado Descuento", price: 110 },
