@@ -63,10 +63,10 @@ module.exports = {
           '@apply': 'p-4 bg-gray-800 rounded-lg',
         },
         '.card-light': {
-          '@apply': 'p-4 bg-gray-100 dark:bg-gray-800 rounded-lg',
+          '@apply': 'p-4 bg-gray-800 rounded-lg',
         },
         '.card-item': {
-          '@apply': 'p-2 bg-gray-50 dark:bg-gray-700 rounded',
+          '@apply': 'p-2 bg-gray-700 rounded',
         },
 
         // ============= GRILLAS =============
@@ -99,7 +99,7 @@ module.exports = {
           '@apply': 'text-lg font-semibold',
         },
         '.text-subtitle': {
-          '@apply': 'text-gray-600 dark:text-gray-400 text-sm',
+          '@apply': 'text-gray-400 text-sm',
         },
 
         // ============= UTILIDADES =============

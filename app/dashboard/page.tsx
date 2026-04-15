@@ -47,21 +47,21 @@ export default function DashboardPage() {
   return (
     <div className={GRID_STYLES.cols3gap4}>
       <div className={CARD_STYLES.darkLarge}>
-        <h2 className="text-gray-600 dark:text-gray-400 text-sm">
+        <h2 className="text-gray-400 text-sm">
           {LABELS.totalSales}
         </h2>
         <p className="text-3xl font-bold mt-2">${totalSales}</p>
       </div>
 
       <div className={CARD_STYLES.darkLarge}>
-        <h2 className="text-gray-600 dark:text-gray-400 text-sm">
+        <h2 className="text-gray-400 text-sm">
           Total Órdenes
         </h2>
         <p className="text-3xl font-bold mt-2">{totalOrders}</p>
       </div>
 
       <div className={CARD_STYLES.darkLarge}>
-        <h2 className="text-gray-600 dark:text-gray-400 text-sm">
+        <h2 className="text-gray-400 text-sm">
           Productos Vendidos
         </h2>
         <p className="text-3xl font-bold mt-2">

@@ -73,7 +73,7 @@ export default function POSPage() {
 
       <div className="mt-4">
         {cart.map((item: any) => (
-          <div key={item.id} className={`${FLEX_STYLES.between} p-2 bg-gray-50 dark:bg-gray-700 rounded mb-2`}>
+          <div key={item.id} className={`${FLEX_STYLES.between} p-2 bg-gray-700 rounded mb-2`}>
             <div className="flex-1">
               <div>{item.name} - ${item.price.toFixed(2)}</div>
             </div>

@@ -3,12 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { LABELS } from '@/utils/constants'
 
-interface SidebarProps {
-  dark: boolean
-  onToggleDark: () => void
-}
-
-export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
+export default function Sidebar({ }) {
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
 
@@ -16,7 +11,7 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700"
+        className="md:hidden px-3 py-2 rounded-lg bg-gray-700"
       >
         ☰
       </button>
@@ -29,7 +24,7 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
 
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-full w-64 bg-gray-100 dark:bg-gray-800 shadow-lg transform transition-transform duration-300 z-40 md:hidden ${
+        className={`fixed left-0 top-0 h-full w-64 bg-gray-800 shadow-lg transform transition-transform duration-300 z-40 md:hidden ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -69,15 +64,6 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
           >
             {LABELS.mergeLabel}
           </button>
-          <button
-            onClick={() => {
-              onToggleDark()
-              setIsOpen(false)
-            }}
-            className="w-full px-4 py-3 rounded-lg bg-gray-200 dark:bg-gray-700 font-semibold hover:bg-gray-300 dark:hover:bg-gray-600"
-          >
-            {dark ? '☀️ Tema Claro' : '🌙 Tema Oscuro'}
-          </button>
         </div>
       </div>
 
@@ -95,13 +81,6 @@ export default function Sidebar({ dark, onToggleDark }: SidebarProps) {
           className="px-3 py-2 rounded-lg bg-purple-500 text-white"
         >
           {LABELS.dashboard}
-        </button>
-
-        <button
-          onClick={onToggleDark}
-          className="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700"
-        >
-          {dark ? '☀️' : '🌙'}
         </button>
       </div>
     </>

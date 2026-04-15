@@ -11,17 +11,17 @@ export default function HomePage() {
       {/* Resumen rápido */}
       <div className={GRID_STYLES.responsiveItems}>
         <div className={`${CARD_STYLES.darkLarge} shadow`}>
-          <h3 className="text-gray-600 dark:text-gray-400 text-sm font-semibold">Ventas Totales</h3>
+          <h3 className="text-gray-400 text-sm font-semibold">Ventas Totales</h3>
           <p className="text-3xl font-bold mt-2">${totalSales}</p>
         </div>
 
         <div className={`${CARD_STYLES.darkLarge} shadow`}>
-          <h3 className="text-gray-600 dark:text-gray-400 text-sm font-semibold">Órdenes Totales</h3>
+          <h3 className="text-gray-400 text-sm font-semibold">Órdenes Totales</h3>
           <p className="text-3xl font-bold mt-2">{totalOrders}</p>
         </div>
 
         <div className={`${CARD_STYLES.darkLarge} shadow`}>
-          <h3 className="text-gray-600 dark:text-gray-400 text-sm font-semibold">Ticket Promedio</h3>
+          <h3 className="text-gray-400 text-sm font-semibold">Ticket Promedio</h3>
           <p className="text-3xl font-bold mt-2">${totalOrders > 0 ? (totalSales / totalOrders).toFixed(2) : 0}</p>
         </div>
       </div>
@@ -31,7 +31,7 @@ export default function HomePage() {
         {/* Gráfica de ventas por período */}
         <div className={CARD_STYLES.darkLarge}>
           <h3 className="text-lg font-semibold mb-4">Ventas por Período</h3>
-          <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center text-gray-500">
+          <div className="h-64 bg-gray-700 rounded flex items-center justify-center text-gray-500">
             [Gráfica de líneas]
           </div>
         </div>
@@ -39,7 +39,7 @@ export default function HomePage() {
         {/* Gráfica de productos más vendidos */}
         <div className={CARD_STYLES.darkLarge}>
           <h3 className="text-lg font-semibold mb-4">Productos Más Vendidos</h3>
-          <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center text-gray-500">
+          <div className="h-64 bg-gray-700 rounded flex items-center justify-center text-gray-500">
             [Gráfica de barras]
           </div>
         </div>
@@ -47,7 +47,7 @@ export default function HomePage() {
         {/* Gráfica de distribución de ventas */}
         <div className={CARD_STYLES.darkLarge}>
           <h3 className="text-lg font-semibold mb-4">Distribución de Ventas</h3>
-          <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center text-gray-500">
+          <div className="h-64 bg-gray-700 rounded flex items-center justify-center text-gray-500">
             [Gráfica de pastel]
           </div>
         </div>
@@ -55,7 +55,7 @@ export default function HomePage() {
         {/* Gráfica de tendencias */}
         <div className={CARD_STYLES.darkLarge}>
           <h3 className="text-lg font-semibold mb-4">Tendencias</h3>
-          <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center text-gray-500">
+          <div className="h-64 bg-gray-700 rounded flex items-center justify-center text-gray-500">
             [Gráfica de área]
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function HomePage() {
       {/* Tabla de órdenes recientes */}
       <div className={CARD_STYLES.darkLarge}>
         <h3 className="text-lg font-semibold mb-4">Órdenes Recientes</h3>
-        <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center text-gray-500">
+        <div className="h-64 bg-gray-700 rounded flex items-center justify-center text-gray-500">
           [Tabla de órdenes]
         </div>
       </div>

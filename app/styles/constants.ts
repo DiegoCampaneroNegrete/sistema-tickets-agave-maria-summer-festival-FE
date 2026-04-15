@@ -24,9 +24,9 @@ export const BUTTON_SIZES = {
 export const CARD_STYLES = {
   dark: 'p-4 bg-gray-800 rounded-lg',
   darkLarge: 'p-6 bg-gray-800 rounded-lg',
-  light: 'p-4 bg-gray-100 dark:bg-gray-800 rounded-lg',
-  lightItem: 'p-2 bg-gray-50 dark:bg-gray-700 rounded',
-  input: 'bg-gray-100 dark:bg-gray-700 rounded-lg px-4 py-2',
+  light: 'p-4 bg-gray-800 rounded-lg',
+  lightItem: 'p-2 bg-gray-700 rounded',
+  input: 'ßbg-gray-700 rounded-lg px-4 py-2',
 }
 
 // ============= GRILLAS =============
@@ -42,7 +42,7 @@ export const GRID_STYLES = {
 export const TEXT_STYLES = {
   title: 'text-xl font-bold',
   heading: 'text-lg font-semibold',
-  subtitle: 'text-gray-600 dark:text-gray-400 text-sm',
+  subtitle: 'ßtext-gray-400 text-sm',
   label: 'text-sm font-semibold',
   body: 'text-base',
 }

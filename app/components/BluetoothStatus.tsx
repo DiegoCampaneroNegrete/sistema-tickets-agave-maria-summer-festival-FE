@@ -14,7 +14,7 @@ export default function BluetoothStatus() {
   };
 
   return (
-    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+    <div className="flex items-center justify-between p-3 bg-gray-700 rounded-lg border border-gray-600">
       <div className="flex items-center gap-3 flex-1">
         <span className="text-2xl">
           {isConnecting ? '🔄' : isConnected ? '🟢' : '🔴'}
@@ -24,10 +24,10 @@ export default function BluetoothStatus() {
             {isConnecting ? 'Escaneando impresoras...' : isConnected ? 'Impresora conectada' : 'Sin impresora'}
           </p>
           {deviceName && (
-            <p className="text-xs text-gray-600 dark:text-gray-400">{deviceName}</p>
+            <p className="text-xs text-gray-400">{deviceName}</p>
           )}
           {!isConnected && !isConnecting && (
-            <p className="text-xs text-orange-600 dark:text-orange-400">
+            <p className="text-xs text-orange-400">
               Puedes hacer cobros sin impresora
             </p>
           )}

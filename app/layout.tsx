@@ -57,7 +57,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <link rel="manifest" href="/manifest.json" />
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col ">
         <ServiceWorkerRegister />
         <Layout>{children}</Layout>
       </body>
