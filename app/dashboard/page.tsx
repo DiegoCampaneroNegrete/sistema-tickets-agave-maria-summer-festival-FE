@@ -1,16 +1,11 @@
 "use client";
 import { LABELS } from "@/utils/constants";
+import { CARD_STYLES, GRID_STYLES, BUTTON_STYLES, BUTTON_SIZES } from '@/styles/constants'
 import { useOrders } from "@/hooks/useOrders";
 import { db } from "@/lib/db";
 
 export default function DashboardPage() {
-  const { totalSales, totalOrders, productCount, orders } = useOrders();
-  const salesByDevice = {};
-
-  // orders.forEach(order => {
-  // salesByDevice[order.deviceId] =
-  //     (salesByDevice[order.deviceId] || 0) + order.total
-  // })
+  const { totalSales, totalOrders, productCount } = useOrders();
 
   const backupAndReset = async () => {
     const confirmReset = confirm(
@@ -50,33 +45,31 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
-          <h2 className="text-gray-600 dark:text-gray-400 text-sm">
-            {LABELS.totalSales}
-          </h2>
-          <p className="text-3xl font-bold mt-2">${totalSales}</p>
-        </div>
-
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
-          <h2 className="text-gray-600 dark:text-gray-400 text-sm">
-            Total Órdenes
-          </h2>
-          <p className="text-3xl font-bold mt-2">{totalOrders}</p>
-        </div>
-
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
-          <h2 className="text-gray-600 dark:text-gray-400 text-sm">
-            Productos Vendidos
-          </h2>
-          <p className="text-3xl font-bold mt-2">
-            {Object.values(productCount).reduce((a, b) => a + b, 0)}
-          </p>
-        </div>
+    <div className={GRID_STYLES.cols3gap4}>
+      <div className={CARD_STYLES.darkLarge}>
+        <h2 className="text-gray-400 text-sm">
+          {LABELS.totalSales}
+        </h2>
+        <p className="text-3xl font-bold mt-2">${totalSales}</p>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
+      <div className={CARD_STYLES.darkLarge}>
+        <h2 className="text-gray-400 text-sm">
+          Total Órdenes
+        </h2>
+        <p className="text-3xl font-bold mt-2">{totalOrders}</p>
+      </div>
+
+      <div className={CARD_STYLES.darkLarge}>
+        <h2 className="text-gray-400 text-sm">
+          Productos Vendidos
+        </h2>
+        <p className="text-3xl font-bold mt-2">
+          {Object.values(productCount).reduce((a, b) => a + b, 0)}
+        </p>
+      </div>
+
+      <div className={`${CARD_STYLES.darkLarge} col-span-full`}>
         <h3 className="text-lg font-bold mb-4">Desglose por Producto</h3>
         <div className="space-y-2">
           {Object.entries(productCount).map(([product, count]) => (
@@ -87,26 +80,29 @@ export default function DashboardPage() {
           ))}
         </div>
       </div>
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
+
+      <div className={`${CARD_STYLES.darkLarge} col-span-full`}>
         <button
           onClick={exportOrders}
-          className="w-full h-16 bg-red-600 text-white rounded-2xl mt-4"
+          className={`w-full ${BUTTON_STYLES.danger} ${BUTTON_SIZES.xl}`}
         >
           Exportar Ventas
         </button>
       </div>
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
+
+      <div className={`${CARD_STYLES.darkLarge} col-span-full`}>
         <button
           onClick={clearOrders}
-          className="w-full h-16 bg-red-600 text-white rounded-2xl mt-4"
+          className={`w-full ${BUTTON_STYLES.danger} ${BUTTON_SIZES.xl}`}
         >
-            Limpiar ordenes
+          Limpiar ordenes
         </button>
       </div>
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
+
+      <div className={`${CARD_STYLES.darkLarge} col-span-full`}>
         <button
           onClick={backupAndReset}
-          className="w-full h-16 bg-red-600 text-white rounded-2xl mt-4"
+          className={`w-full ${BUTTON_STYLES.danger} ${BUTTON_SIZES.xl}`}
         >
           Resetear base de datos
         </button>

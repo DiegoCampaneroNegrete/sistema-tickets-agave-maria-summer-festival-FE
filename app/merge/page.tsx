@@ -4,6 +4,7 @@
 
 'use client'
 
+import { BUTTON_STYLES, CARD_STYLES, SPACING } from '@/styles/constants'
 import { useState } from 'react'
 
 export default function MergePage() {
@@ -61,7 +62,7 @@ export default function MergePage() {
   })
 
   return (
-    <div className="p-4 space-y-4">
+    <div className={`p-4 ${SPACING.md}`}>
       <h1 className="text-xl font-bold">Merge de ventas</h1>
 
       <input
@@ -74,19 +75,19 @@ export default function MergePage() {
 
       <button
         onClick={mergeData}
-        className="w-full h-14 bg-blue-600 text-white rounded-xl"
+        className={`w-full h-14 ${BUTTON_STYLES.primary} rounded-xl`}
       >
         Unir archivos
       </button>
 
       {merged.length > 0 && (
         <>
-          <div className="p-4 bg-white dark:bg-gray-800 rounded-xl">
+          <div className={`p-4 ${CARD_STYLES.dark} rounded-xl`}>
             <p>Total ventas: ${totalSales}</p>
             <p>Total órdenes: {merged.length}</p>
           </div>
 
-          <div className="p-4 bg-white dark:bg-gray-800 rounded-xl">
+          <div className={`p-4 ${CARD_STYLES.dark} rounded-xl`}>
             <h2 className="font-bold">Ventas por caja</h2>
             {Object.entries(salesByDevice).map(([device, total]) => (
               <div key={device} className="flex justify-between">
@@ -98,7 +99,7 @@ export default function MergePage() {
 
           <button
             onClick={downloadMerged}
-            className="w-full h-14 bg-green-600 text-white rounded-xl"
+            className={`w-full h-14 ${BUTTON_STYLES.success} rounded-xl`}
           >
             Descargar merge
           </button>

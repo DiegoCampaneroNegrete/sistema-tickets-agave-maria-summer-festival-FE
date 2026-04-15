@@ -1,68 +1,70 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { LABELS } from "@/utils/constants";
+import { LABELS, PRODUCTS } from "@/utils/constants";
+import { BUTTON_STYLES, CARD_STYLES, GRID_STYLES, FLEX_STYLES } from '@/styles/constants'
+
 
 import { useCart } from "@/hooks/useCart";
 import { useOrders } from "@/hooks/useOrders";
 import { useBluetooth } from "@/hooks/useBluetooth";
 import { useToast } from "@/hooks/useToast";
-import { Order } from "@/lib/types";
-import { usePrinter } from '@/hooks/usePrinter'
 import { generateId } from "@/utils/utils";
 import BluetoothStatus from "@/components/BluetoothStatus";
-
-const PRODUCTS = [
-  { id: "1", name: "Pulque Natural", price: 100 },
-  { id: "2", name: "Pulque Curado", price: 120 },
-  { id: "3", name: "Pócima", price: 150 },
-  { id: "4", name: "Tejuichela", price: 100 },
-];
+import { useEffect } from "react";
+import { buildTwoTicket } from "@/utils/ticketBuilder";
 
 export default function POSPage() {
-  const { deviceId, isConnected } = useBluetooth()
-  const { addToast } = useToast()
-  const { print } = usePrinter({
-    width: '58mm',
-    copies: 2,
-    businessName: 'Agave Maria 🍹'
-  })
-  const { cart, addToCart, removeFromCart, total, clearCart } = useCart();
+  const { addToast } = useToast();
+
+  useEffect(() => { }, []);
+  const { cart, addToCart, removeFromCart, incrementQuantity, decrementQuantity, total, clearCart } = useCart();
   const { createOrder } = useOrders();
 
+  const {
+    deviceId,
+    print,
+    printMessage,
+  } = useBluetooth();
+
   const handleCheckout = async () => {
+    printMessage();
     if (!cart.length) return;
 
-    const order: Order = {
+    const order = {
       id: generateId(),
-      deviceId: deviceId || generateId(), // Usar ID generado si no hay dispositivo
       items: cart,
+      deviceId: deviceId || generateId(), // Usar ID generado si no hay dispositivo
       total,
       createdAt: new Date().toISOString(),
     };
 
     await createOrder(order);
-    
-    // Solo imprimir si está conectado
-    if (isConnected) {
-      print(order);
+
+    const ticket = buildTwoTicket(order, "TICKET DE VENTA");
+
+    try {
+      await print(ticket);
+      addToast("¡Venta realizada con éxito! Imprimiendo...", "success");
+    } catch (err) {
+      console.error("Error al imprimir", err);
+      addToast("Error al imprimir", "error");
     }
-    
+
     clearCart();
-    addToast(`✅ Venta registrada - Total: $${total.toFixed(2)}`, 'success', 3000);
   };
 
   return (
     <>
-      <div className="mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+      <div className={`mb-4 p-4 ${CARD_STYLES.light} rounded-lg`}>
         <BluetoothStatus />
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className={GRID_STYLES.cols2gap3}>
         {PRODUCTS.map((p) => (
           <button
             key={p.id}
             onClick={() => addToCart(p)}
-            className="h-24 rounded-2xl bg-black text-white"
+            className={`h-24 rounded-2xl bg-black text-white`}
           >
             {p.name}
           </button>
@@ -71,22 +73,44 @@ export default function POSPage() {
 
       <div className="mt-4">
         {cart.map((item: any) => (
-          <div key={item.id} className="flex justify-between items-center">
-            {item.name} - ${item.price.toFixed(2)} - Qty: {item.quantity}
-            <button
-              onClick={() => removeFromCart(item.id)}
-              className="ml-2 text-red-500"
-            >
-              {LABELS.remove}
-            </button>
+          <div key={item.id} className={`${FLEX_STYLES.between} p-2 bg-gray-700 rounded mb-2`}>
+            <div className="flex-1">
+              <div>{item.name} - ${item.price.toFixed(2)}</div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => decrementQuantity(item.id)}
+                className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
+                −
+              </button>
+
+              <span className="w-8 text-center font-semibold">
+                {item.quantity}
+              </span>
+
+              <button
+                onClick={() => incrementQuantity(item.id)}
+                className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
+                +
+              </button>
+
+              <button
+                onClick={() => removeFromCart(item.id)}
+                className="ml-2 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                {LABELS.remove}
+              </button>
+            </div>
           </div>
         ))}
       </div>
-
       <button
         onClick={handleCheckout}
         disabled={!cart.length}
-        className="w-full h-20 bg-green-600 text-white mt-4 disabled:bg-gray-400 disabled:cursor-not-allowed"
+        className={`w-full h-20 ${!cart.length ? BUTTON_STYLES.disabled : BUTTON_STYLES.success} text-white mt-4`}
       >
         {LABELS.checkout}
       </button>
