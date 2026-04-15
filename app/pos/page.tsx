@@ -9,20 +9,17 @@ import { useToast } from "@/hooks/useToast";
 import { generateId } from "@/utils/utils";
 import BluetoothStatus from "@/components/BluetoothStatus";
 import { useEffect } from "react";
-import { buildTicket } from "@/utils/ticketBuilder";
+import { buildTwoTicket } from "@/utils/ticketBuilder";
 
 export default function POSPage() {
   const { addToast } = useToast();
 
-  useEffect(() => {}, []);
-  const { cart, addToCart, removeFromCart, total, clearCart } = useCart();
+  useEffect(() => { }, []);
+  const { cart, addToCart, removeFromCart, incrementQuantity, decrementQuantity, total, clearCart } = useCart();
   const { createOrder } = useOrders();
 
   const {
     deviceId,
-    isConnected,
-    connect,
-    autoDetectPrinter,
     print,
     printMessage,
   } = useBluetooth();
@@ -41,17 +38,14 @@ export default function POSPage() {
 
     await createOrder(order);
 
-    const ticket = buildTicket(order);
+    const ticket = buildTwoTicket(order, "TICKET DE VENTA");
 
     try {
       await print(ticket);
-      // addToast({ id: generateId(), message: '¡Venta realizada e impresa con éxito!', type: 'success' })
       addToast("¡Venta realizada con éxito! Imprimiendo...", "success");
     } catch (err) {
-      console.error("Error al imprimir",err);
+      console.error("Error al imprimir", err);
       addToast("Error al imprimir", "error");
-      // alert("Error al imprimir");
-      // alert()
     }
 
     clearCart();
@@ -61,14 +55,6 @@ export default function POSPage() {
     <>
       <div className="mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
         <BluetoothStatus />
-        <button
-          onClick={async () => {
-            await autoDetectPrinter();
-          }}
-          className="w-full h-16 bg-blue-600 text-white rounded-2xl"
-        >
-          Buscar impresora
-        </button>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -85,18 +71,40 @@ export default function POSPage() {
 
       <div className="mt-4">
         {cart.map((item: any) => (
-          <div key={item.id} className="flex justify-between items-center">
-            {item.name} - ${item.price.toFixed(2)} - Qty: {item.quantity}
-            <button
-              onClick={() => removeFromCart(item.id)}
-              className="ml-2 text-red-500"
-            >
-              {LABELS.remove}
-            </button>
+          <div key={item.id} className="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded mb-2">
+            <div className="flex-1">
+              <div>{item.name} - ${item.price.toFixed(2)}</div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => decrementQuantity(item.id)}
+                className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
+                −
+              </button>
+
+              <span className="w-8 text-center font-semibold">
+                {item.quantity}
+              </span>
+
+              <button
+                onClick={() => incrementQuantity(item.id)}
+                className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
+                +
+              </button>
+
+              <button
+                onClick={() => removeFromCart(item.id)}
+                className="ml-2 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                {LABELS.remove}
+              </button>
+            </div>
           </div>
         ))}
       </div>
-
       <button
         onClick={handleCheckout}
         disabled={!cart.length}
