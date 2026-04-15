@@ -16,6 +16,7 @@
     "@capacitor/android": "^8.3.0",
     "@capacitor/cli": "^8.3.0",
     "@capacitor/core": "^8.3.0",
+    "@capacitor/filesystem": "^8.1.2",
     "@e-is/capacitor-bluetooth-serial": "^6.0.3",
     "dexie": "^4.4.1",
     "jotai": "^2.19.0",

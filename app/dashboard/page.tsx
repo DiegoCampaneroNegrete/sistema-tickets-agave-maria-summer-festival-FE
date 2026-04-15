@@ -3,6 +3,7 @@ import { LABELS } from "@/utils/constants";
 import { CARD_STYLES, GRID_STYLES, BUTTON_STYLES, BUTTON_SIZES } from '@/styles/constants'
 import { useOrders } from "@/hooks/useOrders";
 import { db } from "@/lib/db";
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem'
 
 export default function DashboardPage() {
   const { totalSales, totalOrders, productCount } = useOrders();
@@ -15,14 +16,18 @@ export default function DashboardPage() {
     if (!confirmReset) return;
     const data = await db.table("orders").toArray();
 
-    const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
+    const json = JSON.stringify(data, null, 2)
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `backup-${Date.now()}.json`;
-    a.click();
+    const fileName = `orders-${Date.now()}.json`
 
+    await Filesystem.writeFile({
+      path: fileName,
+      data: json,
+      directory: Directory.Documents,
+      encoding: Encoding.UTF8
+    })
+
+    alert('📁 Archivo exportado en Documents')
     await db.table("orders").clear();
   };
 
@@ -33,15 +38,25 @@ export default function DashboardPage() {
   };
 
   const exportOrders = async () => {
-    const data = await db.table("orders").toArray();
+    try {
+      const data = await db.table("orders").toArray()
 
-    const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
+      const json = JSON.stringify(data, null, 2)
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `orders-${Date.now()}.json`;
-    a.click();
+      const fileName = `backup-${Date.now()}.json`
+
+      await Filesystem.writeFile({
+        path: fileName,
+        data: json,
+        directory: Directory.Documents,
+        encoding: Encoding.UTF8
+      })
+
+      alert('📁 Archivo exportado en Documents')
+    } catch (error) {
+      console.error('❌ Export error:', error)
+      alert('Error al exportar')
+    }
   }
 
   return (
