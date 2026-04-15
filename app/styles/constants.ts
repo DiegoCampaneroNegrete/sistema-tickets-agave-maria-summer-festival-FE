@@ -23,7 +23,7 @@ export const BUTTON_SIZES = {
 // ============= CARDS / CONTENEDORES =============
 export const CARD_STYLES = {
   dark: 'p-4 bg-gray-800 rounded-lg',
-  darkLarge: 'p-6 bg-gray-800 rounded-lg',
+  darkLarge: 'p-6 bg-gray-800 rounded-lg text-sm font-semibold text-gray-400',
   light: 'p-4 bg-gray-800 rounded-lg',
   lightItem: 'p-2 bg-gray-700 rounded',
   input: 'ßbg-gray-700 rounded-lg px-4 py-2',
