@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { LABELS, PRODUCTS } from "@/utils/constants";
+import { BUTTON_STYLES, CARD_STYLES, GRID_STYLES, FLEX_STYLES } from '@/styles/constants'
+
 
 import { useCart } from "@/hooks/useCart";
 import { useOrders } from "@/hooks/useOrders";
@@ -53,16 +55,16 @@ export default function POSPage() {
 
   return (
     <>
-      <div className="mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+      <div className={`mb-4 p-4 ${CARD_STYLES.light} rounded-lg`}>
         <BluetoothStatus />
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className={GRID_STYLES.cols2gap3}>
         {PRODUCTS.map((p) => (
           <button
             key={p.id}
             onClick={() => addToCart(p)}
-            className="h-24 rounded-2xl bg-black text-white"
+            className={`h-24 rounded-2xl bg-black text-white`}
           >
             {p.name}
           </button>
@@ -71,7 +73,7 @@ export default function POSPage() {
 
       <div className="mt-4">
         {cart.map((item: any) => (
-          <div key={item.id} className="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded mb-2">
+          <div key={item.id} className={`${FLEX_STYLES.between} p-2 bg-gray-50 dark:bg-gray-700 rounded mb-2`}>
             <div className="flex-1">
               <div>{item.name} - ${item.price.toFixed(2)}</div>
             </div>
@@ -108,7 +110,7 @@ export default function POSPage() {
       <button
         onClick={handleCheckout}
         disabled={!cart.length}
-        className="w-full h-20 bg-green-600 text-white mt-4 disabled:bg-gray-400 disabled:cursor-not-allowed"
+        className={`w-full h-20 ${!cart.length ? BUTTON_STYLES.disabled : BUTTON_STYLES.success} text-white mt-4`}
       >
         {LABELS.checkout}
       </button>
